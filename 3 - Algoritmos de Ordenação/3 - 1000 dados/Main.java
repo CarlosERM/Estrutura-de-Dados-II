@@ -32,17 +32,23 @@ class Main {
             long fim = System.currentTimeMillis();
             
             long duracao = fim - comeco;
-            long milisegundos = (duracao%1000)/100;
-            long segundos = (duracao/1000)% 60;
+            long milisegundos = (duracao%1000) / 100;
+            long segundos = (duracao/1000) % 60;
             long minutos = (duracao/(1000*60)) % 60;
             long horas = (duracao/ (1000*60*60) ) % 24;
+
             // long segundos = duracao / 1000;
             // long minutos = segundos / 60;
             // long horas = minutos / 60;
 
+            String tempo =String.format("%02d:%02d:%02d:%02d", horas, minutos, segundos, milisegundos);
+
             System.out.println(tempo);
             System.out.println(selectionSort.contOp);
+            // System.out.println(insertSort.contOp);
+
             writer.writeDocument(sortedSelection);
+            // writer.writeDocument(sortedInsert);
             scan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

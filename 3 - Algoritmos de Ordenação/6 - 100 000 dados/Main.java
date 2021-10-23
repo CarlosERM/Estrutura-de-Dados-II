@@ -23,27 +23,32 @@ class Main {
                 iInteger[a] = Integer.parseInt(i[a]);
             }
             
-            // long comeco = System.currentTimeMillis();
-            // int sortedInsert[] = insertSort.sort(iInteger);
-            // long fim = System.currentTimeMillis();
-
             long comeco = System.currentTimeMillis();
-            int sortedSelection[] = selectionSort.sort(iInteger);
+            int sortedInsert[] = insertSort.sort(iInteger);
             long fim = System.currentTimeMillis();
 
+            // long comeco = System.currentTimeMillis();
+            // int sortedSelection[] = selectionSort.sort(iInteger);
+            // long fim = System.currentTimeMillis();
+
             long duracao = fim - comeco;
-            long milisegundos = (duracao%1000)/100;
-            long segundos = (duracao/1000)% 60;
+            long milisegundos = (duracao%1000) / 100;
+            long segundos = (duracao/1000) % 60;
             long minutos = (duracao/(1000*60)) % 60;
             long horas = (duracao/ (1000*60*60) ) % 24;
+
             // long segundos = duracao / 1000;
             // long minutos = segundos / 60;
             // long horas = minutos / 60;
+
             String tempo =String.format("%02d:%02d:%02d:%02d", horas, minutos, segundos, milisegundos);
 
             System.out.println(tempo);
-            System.out.println(selectionSort.contOp);
-            writer.writeDocument(sortedSelection);
+            // System.out.println(selectionSort.contOp);
+            System.out.println(insertSort.contOp);
+
+            // writer.writeDocument(sortedSelection);
+            writer.writeDocument(sortedInsert);
             scan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

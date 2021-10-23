@@ -1,6 +1,7 @@
 
 public class SelectionSort {
     int contOp = 0;
+    
     int[] sort(int array[]) {
         int n = array.length;
  
