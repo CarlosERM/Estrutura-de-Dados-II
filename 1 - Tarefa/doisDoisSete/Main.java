@@ -16,10 +16,10 @@ public class Main {
 
 
         pilhas.push2(10);
-        pilhas.push2(10);
 
-        pilhas.pop1();
-        pilhas.pop2();
+        System.out.println(pilhas.pop1()); 
+        System.out.println(pilhas.pop2());
+        
 
 
     }

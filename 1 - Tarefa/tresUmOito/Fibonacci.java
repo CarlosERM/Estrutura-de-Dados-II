@@ -35,7 +35,7 @@ public class Fibonacci {
             return n;
         }
 
-        for(int i =2; i <=n; i++) {
+        for(int i = 2; i <= n; i++) {
             x = pequenoFib;
             pequenoFib = grandeFib;
             grandeFib = x + pequenoFib;
