@@ -24,17 +24,17 @@ class Main {
                 iInteger[a] = Integer.parseInt(i[a]);
             }
             
-            // long comeco = System.currentTimeMillis();
-            // Ordenation.bubbleSort(iInteger);
-            // long fim = System.currentTimeMillis();
+            long comeco = System.currentTimeMillis();
+            Ordenation.shellSort(iInteger);
+            long fim = System.currentTimeMillis();
 
             // long comeco = System.currentTimeMillis();
-            // Ordenation.comboSort(iInteger);
+            // Ordenation.mergeSort(iInteger, 0, iInteger.length -1);
             // long fim = System.currentTimeMillis();  
 
-            long comeco = System.currentTimeMillis();
-            Ordenation.bogoSort(iInteger);
-            long fim = System.currentTimeMillis(); 
+            // long comeco = System.currentTimeMillis();
+            // Ordenation.quickSort(iInteger, 0, iInteger.length - 1);
+            // long fim = System.currentTimeMillis(); 
 
             long duracao = fim - comeco;
             long milisegundos = (duracao%1000) / 100;

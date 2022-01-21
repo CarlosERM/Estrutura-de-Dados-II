@@ -3,9 +3,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 class Main {
     public static void main(String[] args) {
+
+
         File file = new File("dados1000.txt");
 
-  
+      
 
         Writer writer = new Writer();
 
@@ -22,16 +24,16 @@ class Main {
                 iInteger[a] = Integer.parseInt(i[a]);
             }
             
-            // long comeco = System.currentTimeMillis();
-            // Ordenation.bubbleSort(iInteger);
-            // long fim = System.currentTimeMillis();
-
             long comeco = System.currentTimeMillis();
-            Ordenation.comboSort(iInteger);
-            long fim = System.currentTimeMillis();  
+            Ordenation.shellSort(iInteger);
+            long fim = System.currentTimeMillis();
 
             // long comeco = System.currentTimeMillis();
-            // Ordenation.bogoSort(iInteger);
+            // Ordenation.mergeSort(iInteger, 0, iInteger.length -1);
+            // long fim = System.currentTimeMillis();  
+
+            // long comeco = System.currentTimeMillis();
+            // Ordenation.quickSort(iInteger, 0, iInteger.length - 1);
             // long fim = System.currentTimeMillis(); 
 
             long duracao = fim - comeco;
