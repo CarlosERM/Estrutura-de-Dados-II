@@ -85,7 +85,7 @@ public class Writer {
             }
            
             long comeco = System.currentTimeMillis();
-            cont = ordenador.insertionSort(iInteger, 0, 0);
+            cont = ordenador.selectionSort(iInteger, 0, 0);
             long fim = System.currentTimeMillis(); 
 
             long duracao = fim - comeco;
@@ -104,7 +104,7 @@ public class Writer {
             System.out.println("Quantidade de Comparações: " + cont[0]);
             System.out.println("Quantidade de Movimentos: " + cont[1]);
             System.out.println();
-            writeDocument(iInteger, qtdPrint, "Insertion Sort", tempo, cont[0], cont[1]);
+            writeDocument(iInteger, qtdPrint, "Selection Sort", tempo, cont[0], cont[1]);
 
             scan.close();
         } catch (FileNotFoundException e) {
