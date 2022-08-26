@@ -77,7 +77,9 @@ public class Writer {
             while(scan.hasNextLine()) {
                 i = scan.nextLine().split(", ");
             }
-
+            i[0]= i[0].split("\\[")[1];
+            i[i.length - 1] = i[i.length - 1].split("\\]")[0];
+            
             for (int a = 0; a < i.length; a++) {
                 iInteger[a] = Integer.parseInt(i[a]);
             }
@@ -118,34 +120,34 @@ public class Writer {
             
             switch(qtd) {
                 case 5:
-                    file = new File("dados5Ordenado.txt"); //cria um objeto File chamado file.
+                    file = new File("1 - dados5Ordenado.txt"); //cria um objeto File chamado file.
                 break;
                 case 100:
-                    file = new File("dados100Ordenado.txt"); //cria um objeto File chamado file.
+                    file = new File("2 - dados100Ordenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 case 1000:
-                    file = new File("dados1000Ordenado.txt"); //cria um objeto File chamado file.
+                    file = new File("3 - dados1000Ordenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 case 10000:
-                    file = new File("dados10_milOrdenado.txt"); //cria um objeto File chamado file.
+                    file = new File("4 - dados10_milOrdenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 case 50000:
-                    file = new File("dados50_milOrdenado.txt"); //cria um objeto File chamado file.
+                    file = new File("5 - dados50_milOrdenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 case 100000:
-                    file = new File("dados100_milOrdenado.txt"); //cria um objeto File chamado file.
+                    file = new File("6 - dados100_milOrdenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 case 500000:
-                    file = new File("dados500_milOrdenado.txt"); //cria um objeto File chamado file.
+                    file = new File("7 - dados500_milOrdenado.txt"); //cria um objeto File chamado file.
 
                 break;
                 default:
-                    file = new File("dados5Ordenado.txt"); //cria um objeto File chamado file.
+                    file = new File("8 - dados5Ordenado.txt"); //cria um objeto File chamado file.
 
                 break;
             }
@@ -160,9 +162,10 @@ public class Writer {
             
 
             for ( int x = 0; x < array.length; x++) {
-                if(x == array.length) {
-                    print.print(" " + array[x]);
-
+                if(x == array.length - 1) {
+                    print.print(array[x] + "]" );
+                } else if(x == 0) {
+                    print.print("[" + array[x]+ ", ");
                 } else {
                     print.print(array[x]+ ", ");
                 }
