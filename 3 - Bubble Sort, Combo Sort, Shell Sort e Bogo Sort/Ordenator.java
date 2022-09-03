@@ -90,20 +90,32 @@ class Ordenator {
     int n = array.length;
     int h = 1;
     while (h < n) {
-      h = h *3 + 1;
+      comparacao++;
+      h = h * 3 + 1;
     }
     h = (int) Math.floor(h / 3);
 
     int elemento, j;
     while(h > 0) {
+      comparacao++;
+
+      comparacao++;
       for(int i = h; i < n; i++) {
+        comparacao++;
+
         elemento = array[i];
         j = i;
+
+        comparacao++;
         while ( j >= h && array[j - h] > elemento) {
+          comparacao++;
+
           array[j] = array[j - h];
+          movimentacao++;
           j = j - h;
         }
         array[j] =  elemento;
+        movimentacao++;
       }
       h = h / 2;
     }
