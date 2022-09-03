@@ -1,0 +1,7 @@
+Nome do aluno: Carlos Eduardo Rocha Miranda
+Nome do Algoritmo: Bubble Sort
+Tempo de Execucao: 00:00:00:00
+Quantidade de Comparacoes: 45
+Quantidade de Movimentacoes: 15
+
+[-13805, 3724, 3945, 5371, 16190]
