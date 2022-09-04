@@ -1,3 +1,5 @@
+import java.util.Random;
+
 class Ordenator {
 
   // BUBBLE SORT
@@ -128,23 +130,36 @@ class Ordenator {
   // BOGO SORT
   long[] bogoSort(Integer array[],  long comparacao, long movimentacao) {
     boolean ordenado = false;
-    while(ordenado == false) {
+    Random random = new Random();
+    comparacao++;
+    while(ordenado == false) { 
+      comparacao++;
+      
       ordenado = true;
+
+      comparacao++;
       // Verificar se está ordenado;
       for (int i = 1; i < array.length; i++) {
+        comparacao++;
         if (array[i] < array[i - 1]) {
           ordenado = false;
           break;
         }
       }
 
+      comparacao++;
       // Embaralhar
       if(ordenado == false) {
+        comparacao++;
         for (int i = 0; i < array.length; i++) {
-          int j = (int)(Math.random() * i);
+          comparacao++;
+          int j = random.nextInt(array.length);
           int aux = array[i];
+          movimentacao++;
           array[i] = array[j];
-          array[j] = aux;    
+          movimentacao++;
+          array[j] = aux;
+          movimentacao++;    
         }
       }
     }
