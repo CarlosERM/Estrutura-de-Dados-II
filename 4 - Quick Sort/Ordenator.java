@@ -1,55 +1,71 @@
+import java.util.Random;
 
 class Ordenator {
-  long comparacao;
-  long movimentacao;
+  long comparacao = 0;
+  long movimentacao = 0;
   
   // QUICK SORT
-  long[] quickSort(Integer array[], int inicio, int fim) {
-    if(inicio < fim) {
-      int pivo = particao(array, inicio, fim);
-
-      try {
-        quickSort(array, inicio, pivo - 1);
-        quickSort(array, pivo + 1, fim);
-      } catch (StackOverflowError e) {
-        System.out.println("");
-      }
-     
+    void quickSort(Integer[] array, int indicePequeno, int indiceAlto) {
+    comparacao++;
+    if (indicePequeno >= indiceAlto) {
+      return;
     }
-    long tudo[]  = new long[2];
-    tudo[0] = comparacao;
-    tudo[1] = movimentacao;
-    return tudo;
+
+    int indicePivo = new Random().nextInt(indiceAlto - indicePequeno) + indicePequeno;
+    int pivo = array[indicePivo];
+    trocar(array, indicePivo, indiceAlto);
+
+    int ponteiroEsquerdo = particao(array, indicePequeno, indiceAlto, pivo);
+
+    quickSort(array, indicePequeno, ponteiroEsquerdo - 1);
+    quickSort(array, ponteiroEsquerdo + 1, indiceAlto);
+
   }
 
-  int particao(Integer array[], int inicio, int fim) {
-    int pivo = array[fim];
-    int barraAzul = inicio - 1;
-    Integer aux;
-    Integer aux2;
-    comparacao++;
-    for(int barraVerde = inicio; barraVerde < fim; barraVerde++) {
-    comparacao++;
-    
-    comparacao++;
-        if(array[barraVerde] <= pivo) {
-          barraAzul++;
-          aux = array[barraVerde];
-          movimentacao++;
-          array[barraVerde] = array[barraAzul];
-          movimentacao++;
-          array[barraAzul] = aux;
-          movimentacao++;
+    int particao(Integer[] array, int indicePequeno, int indiceAlto, int pivo) {
+      int ponteiroEsquerdo = indicePequeno;
+      int ponteiroDireito = indiceAlto - 1;
+
+      while (ponteiroEsquerdo < ponteiroDireito) {
+        comparacao++;
+        // Anda da esquerda para a direita até encontrar um número maior que o pivô ou 
+        // até se encontrar com o ponteiroDireito.
+        while (array[ponteiroEsquerdo] <= pivo && ponteiroEsquerdo < ponteiroDireito) {
+          comparacao++;
+          ponteiroEsquerdo++;
         }
-    }
-    aux2 = array[barraAzul + 1];
-    movimentacao++;
-    array[barraAzul + 1] = array[fim];
-    movimentacao++;
-    array[fim] = aux2;
-    movimentacao++;
-    return barraAzul + 1;
+
+        // Anda da direita para a esquerda até encontrar um número menor que o pivô ou
+        // até se encontrar com o ponteiroEsquerdo.
+        while (array[ponteiroDireito] >= pivo && ponteiroEsquerdo < ponteiroDireito) {
+          comparacao++;
+
+          ponteiroDireito--;
+        }
+
+        trocar(array, ponteiroEsquerdo, ponteiroDireito);
+      }
+
+      comparacao++;
+      if(array[ponteiroEsquerdo] > array[indiceAlto]) {
+        trocar(array, ponteiroEsquerdo, indiceAlto);
+      } else {
+        ponteiroEsquerdo = indiceAlto;
+      }
+      
+      return ponteiroEsquerdo;
   }
+
+  void trocar(Integer[] array, int index1, int index2) {
+    int temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
+    movimentacao++;
+    movimentacao++;
+    movimentacao++;
+
+  }
+
     // MERGE SORT
 
     void merge(Integer array[], int esquerda, int meio, int direita)

@@ -85,9 +85,9 @@ public class Writer {
             }
            
             long comeco = System.currentTimeMillis();
-            cont = ordenador.quickSort(iInteger, 0, iInteger.length - 1);
+            ordenador.quickSort(iInteger, 0, iInteger.length - 1);
             long fim = System.currentTimeMillis(); 
-
+            
             long duracao = fim - comeco;
             long milisegundos = (duracao%1000) / 100;
             long segundos = (duracao/1000) % 60;
@@ -101,10 +101,11 @@ public class Writer {
             System.out.println();
 
             System.out.println("Duracao: " + tempo);
-            System.out.println("Quantidade de Comparações: " + cont[0]);
-            System.out.println("Quantidade de Movimentos: " + cont[1]);
+            System.out.println("Quantidade de Comparações: " + ordenador.comparacao);
+            System.out.println("Quantidade de Movimentos: " + ordenador.movimentacao);
             System.out.println();
-            writeDocument(iInteger, qtdPrint, "Quick Sort", tempo, cont[0], cont[1]);
+            writeDocument(iInteger, qtdPrint, "Quick Sort", tempo, 
+            ordenador.comparacao, ordenador.movimentacao);
 
             scan.close();
         } catch (FileNotFoundException e) {
