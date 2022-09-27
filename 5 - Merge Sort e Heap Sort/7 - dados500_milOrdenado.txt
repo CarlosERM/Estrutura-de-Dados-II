@@ -1,6 +1,6 @@
 Nome do aluno: Carlos Eduardo Rocha Miranda
 Nome do Algoritmo: Quick Sort
-Tempo de Execucao: 00:00:00:01
+Tempo de Execucao: 00:00:00:04
 Quantidade de Comparacoes: 0
 Quantidade de Movimentacoes: 0
 

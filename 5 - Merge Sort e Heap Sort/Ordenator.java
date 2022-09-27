@@ -70,4 +70,54 @@ class Ordenator {
         k++;
       }
     }
+
+    // Heap Sort
+    
+    void heapSort(Integer[] array) {
+      int tamanho = array.length;
+
+      // Graças a natureza da estrutura de filhos da árvore binária só precisamos
+      // percorrer metade do vetor menos um.
+      for(int i = tamanho / 2 - 1; i>= 0; --i ) {
+        fazHeap(array, tamanho, i);
+      }
+      // Já é garantido que as raízes são os maiores elementos. Agora eu pego o maior elemento e jogo para o fim.
+
+      for(int i = tamanho - 1; i > 0; i--) {
+        int aux = array[0]; // Maior elemento no heap.
+        array[0] = array[i]; // Coloco o menor no topo do heap.
+        array[i] = aux; // Coloco o maior no último lugar.
+
+        // A cada troca o vetor fica bagunçado. Por isso: 
+        fazHeap(array, i, 0);
+      }
+
+    }
+
+    void fazHeap(Integer[] array, int tamanho, int i) {
+      int raiz = i;
+
+      //As coordenadas dos filhos em um heap.
+      int filhoEsquerdo = 2 * i + 1;
+      int filhoDireito = 2 * i + 2;
+
+      // Se o filho a esquerda é maior que o pai, o filho a esquerda é o novo pai.
+      if(filhoEsquerdo < tamanho && array[filhoEsquerdo] > array[raiz] ) {
+        raiz = filhoEsquerdo;
+      }
+      // Se o filho a direita é maior que o pai, o filho a direita é o novo pai.
+      if(filhoDireito < tamanho && array[filhoDireito] > array[raiz] ) {
+        raiz = filhoDireito;
+      }
+
+      // Se houve alguma troca.
+      if(raiz != i) {
+        int aux = array[i];
+        array[i] = array[raiz];
+        array[raiz] = aux;
+
+        // Se houve troca, eu preciso fazer o heap novamente para verificar se o maior é de fato o maior.
+        fazHeap(array, tamanho, raiz);
+      }
+    }
 }
