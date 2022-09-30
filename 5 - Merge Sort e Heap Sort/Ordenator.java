@@ -5,7 +5,8 @@ class Ordenator {
   // QUICK SORT
     void mergeSort(Integer[] array) {
       int tamanho = array.length;
-      
+
+      comparacao++;
       if(tamanho < 2) {
         // Array com apenas um elemento está ordenado.
         return;
@@ -18,11 +19,13 @@ class Ordenator {
                                                     // no caso de tamanhos ímpares.
       // Popular o array parteEsquerda[]
       for(int i = 0; i < meio; i++) {
+        movimentacao++;
         parteEsquerda[i] = array[i];
       }
 
       // Popular o array parteDireita[]
       for(int i = meio; i < tamanho; i++) {
+        movimentacao++;
         parteDireita[i - meio] = array[i];
       }
 
@@ -46,6 +49,7 @@ class Ordenator {
       while(iEsquerda < tamanhoEsquerda && jDireita < tamanhoDireita) {
         // O valor que está no array esquerdo é menor ou igual ao valor
         // que está no array direito.
+        comparacao++;
         if(parteEsquerda[iEsquerda] <= parteDireita[jDireita]) {
           array[k] = parteEsquerda[iEsquerda];
           iEsquerda++;
@@ -58,6 +62,7 @@ class Ordenator {
       // Caso sobrem elementos, eles precisam ser colocados no array.
       // Se pegamos todos os valores, iEsquerda seria maior que tamanhoEsquerda.  
       while(iEsquerda < tamanhoEsquerda) {
+        movimentacao++;
         array[k] = parteEsquerda[iEsquerda];
         iEsquerda++;
         k++;
@@ -65,6 +70,7 @@ class Ordenator {
 
       // Se pegamos todos os valores, jDireita seria maior que tamanhoDireita.  
       while(jDireita < tamanhoDireita) {
+        movimentacao++;
         array[k] = parteDireita[jDireita];
         jDireita++;
         k++;
@@ -87,6 +93,9 @@ class Ordenator {
         int aux = array[0]; // Maior elemento no heap.
         array[0] = array[i]; // Coloco o menor no topo do heap.
         array[i] = aux; // Coloco o maior no último lugar.
+        movimentacao++;
+        movimentacao++;
+        movimentacao++;
 
         // A cada troca o vetor fica bagunçado. Por isso: 
         fazHeap(array, i, 0);
@@ -101,20 +110,29 @@ class Ordenator {
       int filhoEsquerdo = 2 * i + 1;
       int filhoDireito = 2 * i + 2;
 
+      comparacao++;
       // Se o filho a esquerda é maior que o pai, o filho a esquerda é o novo pai.
       if(filhoEsquerdo < tamanho && array[filhoEsquerdo] > array[raiz] ) {
         raiz = filhoEsquerdo;
+        movimentacao++;
+
       }
+
+      comparacao++;
       // Se o filho a direita é maior que o pai, o filho a direita é o novo pai.
       if(filhoDireito < tamanho && array[filhoDireito] > array[raiz] ) {
         raiz = filhoDireito;
       }
 
+      comparacao++;
       // Se houve alguma troca.
       if(raiz != i) {
         int aux = array[i];
         array[i] = array[raiz];
         array[raiz] = aux;
+        movimentacao++;
+        movimentacao++;
+        movimentacao++;
 
         // Se houve troca, eu preciso fazer o heap novamente para verificar se o maior é de fato o maior.
         fazHeap(array, tamanho, raiz);

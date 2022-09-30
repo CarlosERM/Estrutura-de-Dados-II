@@ -104,7 +104,7 @@ public class Writer {
             System.out.println("Quantidade de Comparações: " + ordenador.comparacao);
             System.out.println("Quantidade de Movimentos: " + ordenador.movimentacao);
             System.out.println();
-            writeDocument(iInteger, qtdPrint, "Quick Sort", tempo, 
+            writeDocument(iInteger, qtdPrint, "Heap Sort", tempo, 
             ordenador.comparacao, ordenador.movimentacao);
 
             scan.close();

@@ -1,7 +1,7 @@
 Nome do aluno: Carlos Eduardo Rocha Miranda
-Nome do Algoritmo: Quick Sort
+Nome do Algoritmo: Heap Sort
 Tempo de Execucao: 00:00:00:00
-Quantidade de Comparacoes: 0
-Quantidade de Movimentacoes: 0
+Quantidade de Comparacoes: 33
+Quantidade de Movimentacoes: 32
 
 [-13805, 3724, 3945, 5371, 16190]
