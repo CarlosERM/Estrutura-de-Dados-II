@@ -2,6 +2,7 @@
 class Ordenator {
   long comparacao = 0;
   long movimentacao = 0;
+
   void gnomeSort(Integer array[]) {
     int n = array.length;
 
@@ -33,11 +34,52 @@ class Ordenator {
   }
     return;
  }
-
- 
-
- void countingSort(Integer array[]) {
+ // Counting Sort
+ int pegarMaior(Integer array[]) {
+  int maior = Integer.MIN_VALUE;
+  for(int a = 0; a < array.length; a++) {
+    if(maior < array[a]) {
+      maior = array[a];
+    }
+  }
+  return maior;
 
  }
 
+ int pegarMenor(Integer array[]) {
+  int menor = Integer.MAX_VALUE;
+  for(int a = 0; a < array.length; a++) {
+    if(menor > array[a]) {
+      menor = array[a];
+    }
+  }
+
+
+  return menor;
+ }
+
+ void countingSort(Integer array[]) {
+
+  int maior = pegarMaior(array);
+  int menor = pegarMenor(array);
+
+  int intervalo = maior - menor + 1; // Para garantir que os valores negativos não sejam ignorados.
+  int count[] = new int[intervalo];
+
+  for (int i : array) {
+      count[i - menor]++; // Contar os números de ocorrências utilizando a fórmula.
+  }
+
+  int indiceArray = 0;
+
+  for(int i = 0; i < intervalo; i++) {
+    while(count[i] > 0) {
+      array[indiceArray] = i + menor; // Pegamos o indice e acrescentamos  + menor porque ele foi decrementado lá em cima.
+      movimentacao++;
+      count[i]--;
+      indiceArray++;
+    }
+  }
+
+ }
 }
