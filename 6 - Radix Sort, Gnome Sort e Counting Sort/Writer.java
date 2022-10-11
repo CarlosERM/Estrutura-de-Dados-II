@@ -5,69 +5,69 @@ public class Writer {
         File file;
         long cont[]= new long[2];
         String i[];
-        Integer iInteger[];
+        int iInteger[];
         Ordenator ordenador = new Ordenator();
         int qtdPrint;
         switch(qtdNumeros) {
             case 1:
                 file = new File("dados5.txt");
                 i = new String[5];
-                iInteger = new Integer[5];
+                iInteger = new int[5];
                 qtdPrint = 5;
             break;
             case 2:
                 file = new File("dados100.txt");
                 i = new String[100];
-                iInteger = new Integer[100];
+                iInteger = new int[100];
                 qtdPrint = 100;
 
             break;
             case 3:
                 file = new File("dados1000.txt");
                 i = new String[1000];
-                iInteger = new Integer[1000];
+                iInteger = new int[1000];
                 qtdPrint = 1000;
             break;
             case 4:
                 file = new File("dados10_mil.txt");
                 i = new String[10000];
-                iInteger = new Integer[10000];
+                iInteger = new int[10000];
                 qtdPrint = 10000;
             break;
             case 5:
                 file = new File("dados50_mil.txt");
                 i = new String[50000];
-                iInteger = new Integer[50000];
+                iInteger = new int[50000];
                 qtdPrint = 50000;
             break;
             case 6:
                 file = new File("dados100_mil.txt");
                 i = new String[100000];
-                iInteger = new Integer[100000];
+                iInteger = new int[100000];
                 qtdPrint = 100000;
             break;
             case 7:
                 file = new File("dados100_mil(pior_caso).txt");
                 i = new String[100000];
-                iInteger = new Integer[100000];
+                iInteger = new int[100000];
                 qtdPrint = 100000;
             break;
             case 8:
                 file = new File("dados100_mil(melhor_caso).txt");
                 i = new String[100000];
-                iInteger = new Integer[100000];
+                iInteger = new int[100000];
                 qtdPrint = 100000;
             break;
             case 9:
                 file = new File("dados500_mil.txt");
                 i = new String[500000];
-                iInteger = new Integer[500000];
+                iInteger = new int[500000];
                 qtdPrint = 500000;
             break;
             default:
                 file = new File("dados5.txt");
                 i = new String[1];
-                iInteger = new Integer[1];
+                iInteger = new int[1];
                 qtdPrint = 5;
             break;
         }
@@ -85,7 +85,7 @@ public class Writer {
             }
            
             long comeco = System.currentTimeMillis();
-            ordenador.radixSort(iInteger);
+            ordenador.sort(iInteger);
             long fim = System.currentTimeMillis(); 
             
             long duracao = fim - comeco;
@@ -104,7 +104,7 @@ public class Writer {
             System.out.println("Quantidade de Comparações: " + ordenador.comparacao);
             System.out.println("Quantidade de Movimentos: " + ordenador.movimentacao);
             System.out.println();
-            writeDocument(iInteger, qtdPrint, "Counting Sort", tempo, 
+            writeDocument(iInteger, qtdPrint, "Radix Sort", tempo, 
             ordenador.comparacao, ordenador.movimentacao);
 
             scan.close();
@@ -115,7 +115,7 @@ public class Writer {
 
 
     }
-    void writeDocument(Integer array[], int qtd, String nomeAlgoritmo, String tempoExecucao, long comparacoes, long movimentacoes) {
+    void writeDocument(int array[], int qtd, String nomeAlgoritmo, String tempoExecucao, long comparacoes, long movimentacoes) {
         File file;
         try {
             
