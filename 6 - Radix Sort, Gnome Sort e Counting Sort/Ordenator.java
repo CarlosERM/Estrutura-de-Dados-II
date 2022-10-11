@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 class Ordenator {
   long comparacao = 0;

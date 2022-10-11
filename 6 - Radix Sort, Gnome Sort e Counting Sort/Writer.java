@@ -85,7 +85,7 @@ public class Writer {
             }
            
             long comeco = System.currentTimeMillis();
-            ordenador.countingSort(iInteger);
+            ordenador.radixSort(iInteger);
             long fim = System.currentTimeMillis(); 
             
             long duracao = fim - comeco;
