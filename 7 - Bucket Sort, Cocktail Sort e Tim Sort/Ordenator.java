@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 class Ordenator {
   long comparacao = 0;
@@ -57,36 +58,80 @@ class Ordenator {
             comeco = comeco + 1;
         }
     }
-    void bucketSortMixed(int[] array) {
-        int n = array.length;
-        ArrayList<Integer> negativos = new ArrayList<Integer>();
-        ArrayList<Integer> positivos = new ArrayList<Integer>();
-        
-        // Agrupar os valores negativos e os valores positivos.
-        for(int i = 0; i < n; i++){
-          if(array[i] < 0){
-            negativos.add(-1 * array[i]);
-          } else {
-            positivos.add(array[i]);
-          }
-        }
-        
-        // Ordenar cada um separadamente.
-        bucketSort(negativos);
-        bucketSort(positivos);
-        
-        // Armazenamento dos valores negativos primeiro.
-        for (int i = 0; i < negativos.size(); i++){ 
-            array[i] = -1 * negativos.get(negativos.size() - 1 - i);
-        }
-        
-        // Armazenamento dos valores positivos.
-        for(int j = negativos.size(); j < n; j++) {
-            array[j] = positivos.get(j - negativos.size()); 
-        }
-      } 
-    void bucketSort(ArrayList<Integer> array) {
-    }
 
+    // Bucket Sort
+    int pegarMaior(int array[]) {
+      int maior = Integer.MIN_VALUE;
+      for(int a = 0; a < array.length; a++) {
+        comparacao++;
+        if(maior < array[a]) {
+          movimentacao++;
+          maior = array[a];
+        }
+      }
+      return maior;
+    
+     }
+    
+     int pegarMenor(int array[]) {
+      int menor = Integer.MAX_VALUE;
+      for(int a = 0; a < array.length; a++) {
+        if(menor > array[a]) {
+          menor = array[a];
+        }
+      }
+    
+    
+      return menor;
+     }
+    void bucketSort(int[] array) {
+      int menor = pegarMenor(array);
+      for (int i = 0; i < array.length; i++) {
+            array[i] -= menor;
+      }
+      int maior = pegarMaior(array);
+      int numeroBaldes = maior / 5;
 
+      // Criação dos baldes.
+      ArrayList<ArrayList<Integer>> baldes = new ArrayList<ArrayList<Integer>>(numeroBaldes);
+      for (int i = 0; i < numeroBaldes; i++) {
+            baldes.add(new ArrayList<Integer>());
+      }
+
+      // Coloca os valores no balde respectivo:
+      for (int i = 0; i < array.length; i++) {
+            int j = numeroBaldes - 1;
+            while (true) {
+              if (j < 0) {
+                break;
+              }
+              if (array[i] >= (j * 5)) {
+                baldes.get(j).add(array[i]);
+                break;
+              }
+              j--;
+            }
+      }
+      int indice = 0;
+      for (int i = 0; i < numeroBaldes; i++) {
+
+            int[] array2 = new int[baldes.get(i).size()];
+
+            // Cada balde individual é despejado dentro do array.
+            for (int j = 0; j < array2.length; j++) {
+              array2[j] = (Integer) baldes.get(i).get(j);
+            }
+            
+            cocktailSort(array2); // algoritmo escolhido para ordenação.
+            // Devolve os valores ao array de entrada:
+            for (int j = 0; j < array2.length; j++, indice++) {
+                  array[indice] = array2[j];
+            }
+
+      }
+      for (int i = 0; i < array.length; i++) {
+            array[i] += menor;
+      }
+    }      
 }
+  
