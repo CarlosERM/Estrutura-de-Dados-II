@@ -104,16 +104,13 @@ public class Writer {
             System.out.println("Quantidade de Comparações: " + ordenador.comparacao);
             System.out.println("Quantidade de Movimentos: " + ordenador.movimentacao);
             System.out.println();
-            writeDocument(iInteger, qtdPrint, "Bucket Sort", tempo, 
+            writeDocument(iInteger, qtdPrint, "Tim Sort", tempo, 
             ordenador.comparacao, ordenador.movimentacao);
 
             scan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-       
-
-
     }
     void writeDocument(int array[], int qtd, String nomeAlgoritmo, String tempoExecucao, long comparacoes, long movimentacoes) {
         File file;

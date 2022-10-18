@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 class Ordenator {
   long comparacao = 0;
@@ -128,7 +127,7 @@ class Ordenator {
               movimentacao++;
             }
             
-            cocktailSort(array2); // algoritmo escolhido para ordenação.
+            timSort(array2); // algoritmo escolhido para ordenação.
             // Devolve os valores ao array de entrada:
             for (int j = 0; j < array2.length; j++, indice++) {
               array[indice] = array2[j];
