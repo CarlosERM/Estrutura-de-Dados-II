@@ -1,17 +1,19 @@
 public class Main {
     public static void main(String[] args) {
-        BinaryTreeAVL arvoreBinariaAVL = new BinaryTreeAVL();
-        
-        arvoreBinariaAVL.inserirElemento(13);
-        arvoreBinariaAVL.inserirElemento(10);
-        arvoreBinariaAVL.inserirElemento(15);
-        arvoreBinariaAVL.inserirElemento(5);
-        arvoreBinariaAVL.inserirElemento(11);
-        arvoreBinariaAVL.inserirElemento(4);
-        arvoreBinariaAVL.inserirElemento(6);
-        arvoreBinariaAVL.inserirElemento(14);
-        arvoreBinariaAVL.inserirElemento(16);
+        BinaryTreeAVL arvoreAVL = new BinaryTreeAVL();
+        arvoreAVL.inserir(1);
+        arvoreAVL.inserir(5);
+        arvoreAVL.inserir(4);
+        arvoreAVL.inserir(3);
+        arvoreAVL.inserir(2);
+        arvoreAVL.inserir(7);
+        arvoreAVL.inserir(
+            6
+        );
+        arvoreAVL.inOrder(arvoreAVL.raiz);
 
-        arvoreBinariaAVL.passadaEmNivel();
+        arvoreAVL.deletar(1);
+        arvoreAVL.inOrder(arvoreAVL.raiz);
+
     }
 }

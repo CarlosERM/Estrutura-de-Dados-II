@@ -1,195 +1,202 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
-class BinaryTreeAVL  {  
-    private NodeAVL raiz;       
-
-    public BinaryTreeAVL() {  
-        raiz = null;  
-    }  
-
-    // Faz a árvore avl vazia.
-    public void removerTodos()  {  
-        raiz = null;  
-    }  
-
-    // Checa se a árvore está vazia ou não.
-    public boolean checaVazio() {  
-        if(raiz == null)  
-            return true;
-        else   
-            return false;  
+class BinaryTreeAVL {
+    NodeAVL raiz;
+ 
+    // Pega a altura da árvore.
+    int altura(NodeAVL node) {
+        if (node == null)
+            return 0;
+        return node.altura;
+    }
+ 
+    // Pega o máximo de dois números.
+    int maior(int a, int b) {
+        return (a > b) ? a : b;
+    }
+ 
+    // Roda a subárvore para a direita.
+    NodeAVL rotacaoDireita(NodeAVL node) {
+        NodeAVL novaRaiz = node.esquerda;
+        NodeAVL subarvore2 = novaRaiz.direita;
+ 
+        // Rotação
+        novaRaiz.direita = node;
+        node.esquerda = subarvore2;
+ 
+        // Atualizar altura dos nodes.
+        node.altura = maior(altura(node.esquerda), altura(node.direita)) + 1;
+        novaRaiz.altura = maior(altura(novaRaiz.esquerda), altura(novaRaiz.direita)) + 1;
+ 
+        return novaRaiz;
+    }
+ 
+    // Rodar pra esquerda.
+    NodeAVL rotacaoEsquerda(NodeAVL node) {
+        NodeAVL novaRaiz = node.direita;
+        NodeAVL subarvore2 = novaRaiz.esquerda;
+ 
+        novaRaiz.esquerda = node;
+        node.direita = subarvore2;
+ 
+        node.altura = maior(altura(node.esquerda), altura(node.direita)) + 1;
+        novaRaiz.altura = maior(altura(novaRaiz.esquerda), altura(novaRaiz.direita)) + 1;
+ 
+        return novaRaiz;
+    }
+ 
+    int getBalanceamento(NodeAVL node) {
+        if (node == null)
+            return 0;
+ 
+        return altura(node.direita) - altura(node.direita);
     }
 
-    // Insere um elemento na Árvore Binária AVL.
-    public void inserirElemento(int valor)  {  
-        raiz = inserirElemento(valor, raiz);  
-    }  
-      
-    // Pega a altura da árvore AVL.
-    private int pegarAltura(NodeAVL node ) {  
-        return node == null ? -1 : node.altura;  
-    }  
+    void inserir(int valor) {
+        raiz = inserir(raiz, valor);
+    }
+ 
+    NodeAVL inserir(NodeAVL node, int valor) {
+ 
+        /* 1.  INSERÇÃO NORMAL */
+        if (node == null)
+            return (new NodeAVL(valor));
+ 
+        if (valor < node.valor)
+            node.esquerda = inserir(node.esquerda, valor);
+        else if (valor > node.valor)
+            node.direita = inserir(node.direita, valor);
+        else // Valores iguais não são permitidos.
+            return node;
+ 
+        // 2. Atualizar a altura do node.
+        node.altura = 1 + maior(altura(node.esquerda), altura(node.direita));
+ 
+        // Pega o fator de balanceamento do node para checar se ele está desbalanceado.
+        int balanceamento = getBalanceamento(node);
+ 
 
-    // Pega a altura máxima do node. 
-    private int pegaAlturaMaxima(int alturaNodeEsquerda, int alturaNodeDireita) {  
-        return alturaNodeEsquerda > alturaNodeDireita ? alturaNodeEsquerda : alturaNodeDireita;  
-    }  
-      
-    // Método para inserir dados na Árvore AVL recursivamente.
-    private NodeAVL inserirElemento(int valor, NodeAVL node) {  
-        // Checa se o node é nulo ou não.
-        if (node == null)  
-            node = new NodeAVL(valor);  
-        // Insere um node caso o valor seja menor que o valor da raiz.
-        else if (valor < node.valor) {  
-            node.esquerda = inserirElemento( valor, node.esquerda );  
-            if( pegarAltura( node.esquerda ) - pegarAltura( node.direita ) == 2 )  
-                if( valor < node.esquerda.valor )  
-                    node = duplaComFilhoEsquerdo( node );  
-                else  
-                    node = duplaComFilhoEsquerdo( node );  
-        } else if( valor > node.valor ) {  
-            node.direita = inserirElemento( valor, node.direita );  
-            if( pegarAltura( node.direita ) - pegarAltura( node.esquerda ) == 2 )  
-                if( valor > node.direita.valor)  
-                    node = rotacaoComFilhoDireito( node );  
-                else  
-                    node = duplaComFilhoDireito( node );  
-        }  else;  // Se o valor está presente na árvore, não faz nada.
-        node.altura = pegaAlturaMaxima( pegarAltura( node.esquerda ), pegarAltura( node.direita ) ) + 1;  
-        return node;  
-    }  
-      
-    // Rotação com o Filho Esquerdo.      
-    private NodeAVL rotacaoComFilhoEsquerdo(NodeAVL node2) {  
-        NodeAVL node1 = node2.esquerda;  
-        node2.esquerda = node1.direita;  
-        node1.direita = node2;  
-        node2.altura = pegaAlturaMaxima( pegarAltura( node2.esquerda ), pegarAltura( node2.direita ) ) + 1;  
-        node1.altura = pegaAlturaMaxima( pegarAltura( node1.esquerda ), node2.altura ) + 1;  
-        return node1;  
-    }  
-  
-    // Rotação com o Filho Direito    
-    private NodeAVL rotacaoComFilhoDireito(NodeAVL node1) {  
-        NodeAVL node2 = node1.direita;  
-        node1.direita = node2.esquerda;  
-        node2.esquerda = node1;  
-        node1.altura = pegaAlturaMaxima( pegarAltura( node1.esquerda ), pegarAltura( node1.direita ) ) + 1;  
-        node2.altura = pegaAlturaMaxima( pegarAltura( node2.direita ), node1.altura ) + 1;  
-        return node2;  
-    }  
-  
-    // Faz a rotação dupla da Árvore Binária.
-    private NodeAVL duplaComFilhoEsquerdo(NodeAVL node3) {  
-        node3.esquerda = rotacaoComFilhoDireito( node3.esquerda );  
-        return rotacaoComFilhoEsquerdo( node3 );  
-    }  
-  
-    // Faz a rotação dupla da Árvore Binária.
-    private NodeAVL duplaComFilhoDireito(NodeAVL node1) {  
-        node1.direita = rotacaoComFilhoEsquerdo( node1.direita );  
-        return rotacaoComFilhoDireito( node1 );  
-    }      
-  
-    // Pega a quantidade de nodes na Árvore AVL
-    public int pegarTotalNumeroNodes() {  
-        return pegarTotalNumeroNodes(raiz);  
-    }  
+        if (balanceamento > 1 && valor < node.esquerda.valor)
+            return rotacaoDireita(node);
+ 
+        // Caso Direita Direita.
+        if (balanceamento < -1 && valor > node.direita.valor)
+            return rotacaoEsquerda(node);
+ 
+        // Caso Esquerda Direita.
+        if (balanceamento > 1 && valor > node.esquerda.valor) {
+            node.esquerda = rotacaoEsquerda(node.esquerda);
+            return rotacaoDireita(node);
+        }
+ 
+        // caso Direita Esquerda.
+        if (balanceamento < -1 && valor < node.direita.valor) {
+            node.direita = rotacaoDireita(node.direita);
+            return rotacaoEsquerda(node);
+        }
+ 
+        return node;
+    }
 
-    private int pegarTotalNumeroNodes(NodeAVL cabeca) {  
-        if (cabeca == null)  
-            return 0;  
-        else {  
-            int tamanho = 1;  
-            tamanho = tamanho + pegarTotalNumeroNodes(cabeca.esquerda);  
-            tamanho = tamanho + pegarTotalNumeroNodes(cabeca.direita);  
-            return tamanho;  
-        }  
-    }  
+    // Retorna o menor valor da árvore.
+    NodeAVL menorValor(NodeAVL node) { 
+        NodeAVL atual = node; 
   
-    // Pesquisar Elemento
-    public boolean pesquisarElemento(int element) {  
-        return pesquisarElemento(raiz, element);  
-    }  
+        // O loop vai até a folha na extrema-esquerda. Que é o menor valor possível na árvore.
+        while (atual.esquerda != null) 
+            atual = atual.esquerda; 
   
-    private boolean pesquisarElemento(NodeAVL cabeca, int element) {  
-        boolean check = false;  
-        while ((cabeca != null) && !check)  {
-            int elementoCabeca = cabeca.valor;
-            if (element < elementoCabeca)
-                cabeca = cabeca.esquerda;
-            else if (element > elementoCabeca)
-                cabeca = cabeca.direita;
-            else {
-                check = true;
-                break;
-            }  
-            check = pesquisarElemento(cabeca, element);  
-        }  
-        return check;  
+        return atual; 
+    } 
+  
+    void deletar(int valor) {
+        raiz = deletarNode(raiz, valor);
+    }
+    
+    NodeAVL deletarNode(NodeAVL raiz, int valor) { 
+        // 1. Remoção padrão.
+        if (raiz == null) 
+            return raiz; 
+  
+        // Se o valor a ser deletador é menor que o valor da raiz, então ele está
+        // na subárvore à esquerda.
+        if (valor < raiz.valor) 
+            raiz.esquerda = deletarNode(raiz.esquerda, valor); 
+  
+        // Se o valor a ser deletado é maior que o valor da raiz, então ele está
+        // na subárvore à direita.
+        else if (valor > raiz.valor) 
+            raiz.direita = deletarNode(raiz.direita, valor); 
+  
+        // Se o valor é o mesmo que o valor de raiz, então esse é o node
+        // que deve ser deletado.
+        else { 
+            // Node com apenas um filho ou nenhum filho. 
+            if ((raiz.esquerda == null) || (raiz.direita == null)) { 
+                NodeAVL temp = null; 
+                if (temp == raiz.esquerda) 
+                    temp = raiz.direita; 
+                else
+                    temp = raiz.esquerda; 
+  
+                // Caso sem filhos. 
+                if (temp == null) { 
+                    temp = raiz; 
+                    raiz = null; 
+                } 
+                else // Caso com um filho.
+                    raiz = temp; // Copia o conteúdo do filho não-vazio.
+            } 
+            else { 
+
+                // Node com dois filhos: Pega o sucessor em ordem(O menor na subárvore à direita.)
+                NodeAVL temp = menorValor(raiz.direita); 
+  
+                // Copia o sucessor em ordem para esse node.
+                raiz.valor = temp.valor; 
+  
+                // Deletar o sucessor em ordem.  
+                raiz.direita = deletarNode(raiz.direita, temp.valor); 
+            } 
+        } 
+  
+        // Se a árvore tiver apenas um node.
+        if (raiz == null) 
+            return raiz; 
+  
+        // 2. Pega a altura atual de um node;
+        raiz.altura = maior(altura(raiz.esquerda), altura(raiz.direita)) + 1; 
+  
+        // 3. Pega o fator de balanceamento desse node. Para ver se ele está desbalancadeado.
+        int balanceamento = getBalanceamento(raiz); 
+  
+        // Se o node está desbalanceado, então temos 4 casos.
+        // esquerda esquerda Case 
+        if (balanceamento > 1 && getBalanceamento(raiz.esquerda) >= 0) 
+            return rotacaoDireita(raiz); 
+  
+        // esquerda direita Case 
+        if (balanceamento > 1 && getBalanceamento(raiz.esquerda) < 0) { 
+            raiz.esquerda = rotacaoEsquerda(raiz.esquerda); 
+            return rotacaoDireita(raiz); 
+        } 
+  
+        // direita direita Case 
+        if (balanceamento < -1 && getBalanceamento(raiz.direita) <= 0) 
+            return rotacaoEsquerda(raiz); 
+  
+        // direita esquerda Case 
+        if (balanceamento < -1 && getBalanceamento(raiz.direita) > 0) { 
+            raiz.direita = rotacaoDireita(raiz.direita); 
+            return rotacaoEsquerda(raiz); 
+        } 
+        return raiz; 
     } 
 
-    // Passagem Em Ordem.
-    public void passagemEmOrdem() {  
-        passagemEmOrdem(raiz);  
-    } 
-
-    private void passagemEmOrdem(NodeAVL cabeca) {  
-        if (cabeca != null) {  
-            passagemEmOrdem(cabeca.esquerda);  
-            System.out.print(cabeca.valor+" ");  
-            passagemEmOrdem(cabeca.direita);  
-        }  
-    }  
-  
-    // Passagem Pré Ordem.
-    public void passagemPreOrdem() {  
-        passagemPreOrdem(raiz);  
-    }
-
-    private void passagemPreOrdem(NodeAVL head) {  
-        if (head != null) {  
-            System.out.print(head.valor + " ");  
-            passagemPreOrdem(head.esquerda);               
-            passagemPreOrdem(head.direita);  
-        }  
-    }  
-      
-    //  Passagem Pós Ordem.
-    public void passagemPosOrdem() {  
-        passagemPosOrdem(raiz);  
-    }  
-      
-    private void passagemPosOrdem(NodeAVL cabeca) {  
-        if (cabeca != null) {  
-            passagemPosOrdem(cabeca.esquerda);               
-            passagemPosOrdem(cabeca.direita);  
-            System.out.print(cabeca.valor + " ");  
-        }  
-    }
-
-    public void passadaEmNivel() {
-        if (raiz == null) {
-            return;
-        }
-    
-        Queue<NodeAVL> nodes = new LinkedList<>();
-        nodes.add(raiz);
-    
-        while (!nodes.isEmpty()) {
-            NodeAVL node = nodes.remove();
-
-            System.out.print(" " + node.valor);
-    
-            if (node.esquerda != null) {
-                nodes.add(node.esquerda);
-            }
-    
-            if (node.direita != null) {
-                nodes.add(node.direita);
-            }
+    void inOrder(NodeAVL node) {
+        if (node != null) {
+            inOrder(node.esquerda);
+            System.out.print(node.valor + " ");
+            inOrder(node.direita);
         }
     }
+ 
 }
