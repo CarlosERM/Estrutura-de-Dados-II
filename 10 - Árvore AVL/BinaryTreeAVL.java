@@ -191,11 +191,29 @@ class BinaryTreeAVL {
         return raiz; 
     } 
 
-    void inOrder(NodeAVL node) {
+   
+    // Passadas
+    public void passadaEmOrdem(NodeAVL node) {
         if (node != null) {
-            inOrder(node.esquerda);
-            System.out.print(node.valor + " ");
-            inOrder(node.direita);
+            passadaEmOrdem(node.esquerda);
+            System.out.print(" " + node.valor);
+            passadaEmOrdem(node.direita);
+        }
+    }
+
+    public void passadaPreOrdem(NodeAVL node) {
+        if (node != null) {
+            System.out.print(" " + node.valor);
+            passadaPreOrdem(node.esquerda);
+            passadaPreOrdem(node.direita);
+        }
+    }
+
+    public void passadaPosOrdem(NodeAVL node) {
+        if (node != null) {
+            passadaPosOrdem(node.esquerda);
+            passadaPosOrdem(node.direita);
+            System.out.print(" " + node.valor);
         }
     }
  

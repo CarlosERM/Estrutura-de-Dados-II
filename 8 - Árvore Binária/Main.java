@@ -34,6 +34,7 @@ public class Main {
         System.out.println();
 
         System.out.println();
+        
         for (int i : numerosAleatorios) {
             System.out.println(i + " Excluído");
             arvoreBinaria.deletar(i);
