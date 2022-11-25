@@ -15,35 +15,32 @@ class BinaryTreeAVL {
  
     // Roda a subárvore para a direita.
     NodeAVL rotacaoDireita(NodeAVL node) {
-        NodeAVL novaRaiz = node.esquerda;
-        NodeAVL subarvore2 = novaRaiz.direita;
- 
-        // Rotação
-        novaRaiz.direita = node;
-        node.esquerda = subarvore2;
+        NodeAVL filhoEsquerdo = node.esquerda;
+
+        node.esquerda = filhoEsquerdo.direita;
+        filhoEsquerdo.direita = node;
  
         // Atualizar altura dos nodes.
         node.altura = maior(altura(node.esquerda), altura(node.direita)) + 1;
-        novaRaiz.altura = maior(altura(novaRaiz.esquerda), altura(novaRaiz.direita)) + 1;
+        filhoEsquerdo.altura = maior(altura(filhoEsquerdo.esquerda), altura(filhoEsquerdo.direita)) + 1;
  
-        return novaRaiz;
+        return filhoEsquerdo;
     }
  
     // Rodar pra esquerda.
     NodeAVL rotacaoEsquerda(NodeAVL node) {
-        NodeAVL novaRaiz = node.direita;
-        NodeAVL subarvore2 = novaRaiz.esquerda;
- 
-        novaRaiz.esquerda = node;
-        node.direita = subarvore2;
+        NodeAVL filhoDireita = node.direita;
+
+        node.direita = filhoDireita.esquerda;
+        filhoDireita.esquerda = node;
  
         node.altura = maior(altura(node.esquerda), altura(node.direita)) + 1;
-        novaRaiz.altura = maior(altura(novaRaiz.esquerda), altura(novaRaiz.direita)) + 1;
+        filhoDireita.altura = maior(altura(filhoDireita.esquerda), altura(filhoDireita.direita)) + 1;
  
-        return novaRaiz;
+        return filhoDireita;
     }
  
-    int getBalanceamento(NodeAVL node) {
+    int fatorBalanceamento(NodeAVL node) {
         if (node == null)
             return 0;
  
@@ -53,6 +50,37 @@ class BinaryTreeAVL {
     void inserir(int valor) {
         raiz = inserir(raiz, valor);
     }
+
+    NodeAVL rebalancear(NodeAVL node) {
+        // Pega o fator de balanceamento do node para checar se ele está desbalanceado.
+        int fatorBalanceamento = fatorBalanceamento(node);
+      
+        // Left-heavy
+        if (fatorBalanceamento < -1) {
+          if (fatorBalanceamento(node.esquerda) <= 0) {    // Caso 1
+            // Rotação para a Direita.
+            node = rotacaoDireita(node);
+          } else {                                // Caso 2
+            // Rotação Esquerda-Direita
+            node.esquerda = rotacaoEsquerda(node.esquerda);
+            node = rotacaoDireita(node);
+          }
+        }
+      
+        // Right-heavy
+        if (fatorBalanceamento > 1) {
+          if (fatorBalanceamento(node.direita) >= 0) {    // Caso 3
+            // Rotacação Esquerda
+            node = rotacaoEsquerda(node);
+          } else {                                 // Caso 4
+            // Rotação Direita-Esquerda
+            node.direita = rotacaoDireita(node.direita);
+            node = rotacaoEsquerda(node);
+          }
+        }
+      
+        return node;
+      }
  
     NodeAVL inserir(NodeAVL node, int valor) {
  
@@ -70,29 +98,7 @@ class BinaryTreeAVL {
         // 2. Atualizar a altura do node.
         node.altura = 1 + maior(altura(node.esquerda), altura(node.direita));
  
-        // Pega o fator de balanceamento do node para checar se ele está desbalanceado.
-        int balanceamento = getBalanceamento(node);
- 
-
-        if (balanceamento > 1 && valor < node.esquerda.valor)
-            return rotacaoDireita(node);
- 
-        // Caso Direita Direita.
-        if (balanceamento < -1 && valor > node.direita.valor)
-            return rotacaoEsquerda(node);
- 
-        // Caso Esquerda Direita.
-        if (balanceamento > 1 && valor > node.esquerda.valor) {
-            node.esquerda = rotacaoEsquerda(node.esquerda);
-            return rotacaoDireita(node);
-        }
- 
-        // caso Direita Esquerda.
-        if (balanceamento < -1 && valor < node.direita.valor) {
-            node.direita = rotacaoDireita(node.direita);
-            return rotacaoEsquerda(node);
-        }
- 
+        node = rebalancear(node);
         return node;
     }
 
@@ -165,29 +171,8 @@ class BinaryTreeAVL {
         // 2. Pega a altura atual de um node;
         raiz.altura = maior(altura(raiz.esquerda), altura(raiz.direita)) + 1; 
   
-        // 3. Pega o fator de balanceamento desse node. Para ver se ele está desbalancadeado.
-        int balanceamento = getBalanceamento(raiz); 
-  
-        // Se o node está desbalanceado, então temos 4 casos.
-        // esquerda esquerda Case 
-        if (balanceamento > 1 && getBalanceamento(raiz.esquerda) >= 0) 
-            return rotacaoDireita(raiz); 
-  
-        // esquerda direita Case 
-        if (balanceamento > 1 && getBalanceamento(raiz.esquerda) < 0) { 
-            raiz.esquerda = rotacaoEsquerda(raiz.esquerda); 
-            return rotacaoDireita(raiz); 
-        } 
-  
-        // direita direita Case 
-        if (balanceamento < -1 && getBalanceamento(raiz.direita) <= 0) 
-            return rotacaoEsquerda(raiz); 
-  
-        // direita esquerda Case 
-        if (balanceamento < -1 && getBalanceamento(raiz.direita) > 0) { 
-            raiz.direita = rotacaoDireita(raiz.direita); 
-            return rotacaoEsquerda(raiz); 
-        } 
+        raiz = rebalancear(raiz);
+
         return raiz; 
     } 
 
