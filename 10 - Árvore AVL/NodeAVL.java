@@ -4,8 +4,8 @@ public class NodeAVL {
     NodeAVL esquerda;
     NodeAVL direita;
  
-    NodeAVL(int d) {
-        valor = d;
+    NodeAVL(int valor) {
+        this.valor = valor;
         altura = 1;
     } 
 }

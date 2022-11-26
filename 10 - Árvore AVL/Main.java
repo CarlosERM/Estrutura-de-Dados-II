@@ -10,11 +10,11 @@ public class Main {
         for (int valor : valores) {
             int[] numeros = pegaArquivo.choose(valor);
 
-            long comeco = System.currentTimeMillis();
 
             for (int n : numeros) {
                 arvoreAVL.inserir(n);
             }
+            long comeco = System.currentTimeMillis();
 
             System.out.println();
             System.out.println("-------------");
@@ -49,10 +49,11 @@ public class Main {
             long horas = (duracao/ (1000*60*60) ) % 24;
             String tempo = String.format("%02d:%02d:%02d:%02d", horas, minutos, segundos, milisegundos);
            
-            long comeco2 = System.currentTimeMillis();
             for (int n : numeros) {
                 arvoreBinaria.adicionar(n);
             }
+            
+            long comeco2 = System.currentTimeMillis();
 
             System.out.println();
             System.out.println("--------------");

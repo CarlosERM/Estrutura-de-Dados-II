@@ -44,7 +44,7 @@ class BinaryTreeAVL {
         if (node == null)
             return 0;
  
-        return altura(node.direita) - altura(node.direita);
+        return altura(node.direita) - altura(node.esquerda);
     }
 
     void inserir(int valor) {
