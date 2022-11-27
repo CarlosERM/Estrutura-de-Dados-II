@@ -130,6 +130,7 @@ public class RedBlackTree {
 
         // Pai é o filho esquerdo do avô.
         else if (pai == avo.esquerda) {
+
           // Caso 4a: Tio é preto e o node é esquerda --> direita "neto interno" do seu avô.
           if (node == pai.direita) {
             rotacaoEsquerda(pai);
@@ -138,7 +139,7 @@ public class RedBlackTree {
             pai = node;
           }
 
-          // Caso 5: Tio é preto e o node é esquerda --> esquerda "Neto Externo" do seu avô.
+          // Caso 5a: Tio é preto e o node é esquerda --> esquerda "Neto Externo" do seu avô.
           rotacaoDireita(avo);
           
           // Recolorir o pai original e o avô.
@@ -191,7 +192,6 @@ public class RedBlackTree {
           return;
         }
       
-        // At this point, "node" is the node to be deleted
         // A partir desse ponto o node é o node que vai ser deletado.
 
         Node nodeSubiu;
@@ -217,8 +217,8 @@ public class RedBlackTree {
         }
       
         if (corNodeDeletado == BLACK) {
-          fixRedBlackPropertiesAfterDelete(nodeSubiu);
-      
+          arrumarPropriedadesArvoreRubroNegraDepoisDeletar(nodeSubiu);
+
           // Remova o node NIL temporário.
           if (nodeSubiu.getClass() == NilNode.class) {
             substituirCriancaDoPai(nodeSubiu.pai, nodeSubiu, null);
@@ -257,8 +257,8 @@ public class RedBlackTree {
         return node;
       }
 
-      void fixRedBlackPropertiesAfterDelete(Node node) {
-        // Caso 1: O node examido é a raiz. Fim da recursão.
+      void arrumarPropriedadesArvoreRubroNegraDepoisDeletar(Node node) {
+        // Caso 1: O node examinado é a raiz. Fim da recursão.
         if (node == raiz) {
           node.cor = BLACK;
           return;
@@ -273,6 +273,7 @@ public class RedBlackTree {
         }
       
         // Casos 3 + 4: Irmão preto com dois filhos pretos.
+
         if (ePreto(irmao.esquerda) && ePreto(irmao.direita)) {
           irmao.cor = RED;
       
@@ -283,7 +284,7 @@ public class RedBlackTree {
       
           // Caso 4: Irmão preto com dois filhos pretos + pai preto.
           else {
-            fixRedBlackPropertiesAfterDelete(node.pai);
+            arrumarPropriedadesArvoreRubroNegraDepoisDeletar(node.pai);
           }
         }
       
@@ -307,9 +308,9 @@ public class RedBlackTree {
         return node == null || node.cor == BLACK;
       }
 
-      private void lidarIrmaoVermelho(Node node, Node sibling) {
+      private void lidarIrmaoVermelho(Node node, Node irmao) {
         // Recolorir.
-        sibling.cor = BLACK;
+        irmao.cor = BLACK;
         node.pai.cor = RED;
       
         // .. e rodar.
@@ -323,6 +324,7 @@ public class RedBlackTree {
         boolean nodeEFilhoEsquerdo = node == node.pai.esquerda;
 
         // Caso 5: O irmão preto com pelo menos um filho vermelho + "sobrinho exterior" é preto.
+        // "Sobrinho externo" significa o filho do irmão oposto ao nó excluído
         // --> Recolorir irmão e seu filho, e rodar ao redor de um irmão.
         if (nodeEFilhoEsquerdo && ePreto(irmao.direita)) {
           irmao.esquerda.cor = BLACK;

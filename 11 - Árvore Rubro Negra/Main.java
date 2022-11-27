@@ -20,8 +20,7 @@ public class Main {
         RedBlackTree arvoreRubroNegra = new RedBlackTree();
         ArrayList<Integer> numerosPrimos = new ArrayList<Integer>();
         Random gerador = new Random();
-
-        long comeco1 = System.currentTimeMillis();
+        System.out.println("Com números primos");
         
         for(int i= 0; i < 1000; i++) {
             int numero = gerador.nextInt(1001);
@@ -30,6 +29,9 @@ public class Main {
                 numerosPrimos.add(numero);
             }
         }
+
+
+        long comeco1 = System.currentTimeMillis();
 
         System.out.println();
         System.out.println("Em ordem: ");
@@ -73,6 +75,7 @@ public class Main {
         for (Integer n : numerosPrimos) {
             arvoreRubroNegra.deletar(n);
         }
+        System.out.println("Sem números primos");
 
         long comeco2 = System.currentTimeMillis();
         
