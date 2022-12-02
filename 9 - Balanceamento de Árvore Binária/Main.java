@@ -25,7 +25,6 @@ public class Main {
         System.out.println("Níveis da Árvore depois do balanceamento.");
         arvoreBinaria.passadaEmNivel();
 
-
         for(int i = 0; i < 20; i++){
             arvoreBinaria.adicionar(gerador.nextInt(101));    
         }
